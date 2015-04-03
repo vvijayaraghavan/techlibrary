@@ -1,0 +1,24 @@
+Elastic Search
+
+METADATA (http://www.elastic.co/guide/en/elasticsearch/guide/current/_document_metadata.html)
+_index
+Where the document lives
+ _type
+The class of object that the document represents
+ _id
+The unique identifier for the document
+
+INDEX SAMPLE (http://www.elastic.co/guide/en/elasticsearch/reference/current/docs-index_.html)
+$ curl -XPUT 'http://localhost:9200/twitter/tweet/1' -d '{
+    "user" : "kimchy",
+    "post_date" : "2009-11-15T14:12:12",
+    "message" : "trying out Elasticsearch"
+}'
+
+{
+    "_index" : "twitter",
+    "_type" : "tweet",
+    "_id" : "1",
+    "_version" : 1,
+    "created" : true
+}
