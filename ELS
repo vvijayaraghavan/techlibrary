@@ -22,3 +22,8 @@ $ curl -XPUT 'http://localhost:9200/twitter/tweet/1' -d '{
     "_version" : 1,
     "created" : true
 }
+
+JDBC INTEGRATION (http://blog.comperiosearch.com/blog/2014/01/30/elasticsearch-indexing-sql-databases-the-easy-way/)
+
+ELS - CRUD OPERATIONS
+http://exploringelasticsearch.com/modeling_data.html
