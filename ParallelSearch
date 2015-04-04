@@ -1,5 +1,10 @@
 package search.load;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,7 +25,13 @@ public class ParallelSearch {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		
+		/*testHttpRequest("http://localhost:8282/BookStoreService/searchservice/getbooklistels"); //?term=young);
+		testHttpRequest("http://localhost:8181/BookStoreService/searchservice/getbooklistels"); //?term=young);
+		testHttpRequest("http://localhost:8080/BookStoreService/searchservice/getbooklistels"); //?term=young);
+		testHttpRequest("http://localhost/BookStoreService/searchservice/getbooklistels"); //?term=young);
+*/		
 		
 		prepareRequestStrsForLoad();
 		
@@ -38,6 +49,35 @@ public class ParallelSearch {
 		
 		eSvc.shutdown();
 		System.out.println("DONE...");
+	}
+	
+	private static void testHttpRequest(String url) throws Exception {
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+ 
+		con.setRequestMethod("POST");
+		String urlParameters = "term=young";
+		con.setDoOutput(true);
+		
+		long reqStartTime = System.currentTimeMillis();
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+		int responseCode = con.getResponseCode();
+		System.out.println("Time Taken Ms = " + (System.currentTimeMillis() - reqStartTime) + " for url - " + url);
+		
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+ 
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+ 
 	}
 	
 	private static void prepareRequestStrsForLoad() {
@@ -98,10 +138,49 @@ class ProcesRequest implements Runnable {
 	}
 	
 	public void run() {
-		searchDocument(clt, searchStr);
+		try {
+			testHttpRequest("http://localhost:8181/BookStoreService/searchservice/getbooklistels", searchStr);
+		} catch (Exception e) {
+			System.err.println(e);
+		}
 	}
 	
-	public void searchDocument(Client clt, String qryStr) {
+	private void testHttpRequest(String url, String qryStr) throws Exception {
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+ 
+		con.setRequestMethod("POST");
+		String urlParameters = "term=" + qryStr;
+		con.setDoOutput(true);
+		
+		long reqStartTime = System.currentTimeMillis();
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+		int responseCode = con.getResponseCode();
+		long timeTakenMs = (System.currentTimeMillis() - reqStartTime);
+		totalTimeMs+= timeTakenMs;
+		
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+ 
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+		
+		System.out.println("requestId[" + requestId + "] start[" + new java.util.Date(reqStartTime) + "] end[" + new java.util.Date() + "] " +
+				"searchStr[" + qryStr + "] " +
+				"timeTaken-ms[" + timeTakenMs + "] " +
+				"response-bytes[" + response.length() + "] " +
+				"totalTimeMs[" + totalTimeMs + "]");
+	}
+	
+	private void searchDocument(Client clt, String qryStr) {
 
 		SearchRequestBuilder searchRequestBuilder = clt.prepareSearch(INDEX);
 		searchRequestBuilder.setTypes(TYPE);
@@ -125,4 +204,6 @@ class ProcesRequest implements Runnable {
 				"totalTimeMs[" + totalTimeMs + "]");
 		
 	}
+	
+	
 }
