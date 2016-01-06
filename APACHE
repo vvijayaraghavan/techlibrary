@@ -1,0 +1,39 @@
+0pti@mum
+
+OSGi (Open Service Gateway Initiative) is a Java framework for developing and deploying modular software programs and libraries.
+The goal of OSGi was to develop a standard middleware for smart devices (STB, modem etc.)
+	Part 1 - Bundles / Plug-ins
+		> the specification defines the interaction of bundles
+	Part 2 - JVM
+		> the bundles uses to publish, discover and bind to services in a SOA
+
+Apache
+	Camel (An EAI Framework)
+		> Developed using EAI Patterns and Spring Framework
+		> Can be deployed stand alone and as an embedded component with application/framework
+		> Extensive use of fluent builder pattern (similar to builder pattern)
+		> CAMEL CONTEXT
+			- Routes / Components
+		> Conversions
+			- File to File with XSLT
+			- File to Database
+			- RDBMS to JMS
+			
+		
+	CXF (Services Framework. Support protocols  SOAP, XML/HTTP, RESTful HTTP, or CORBA and transports JMS, JBI)
+	Directory Server (Similar to LDAP)
+	Karaf (An OSGi runtime, components and apps can be deployed)
+	Shiro (Security Framework)
+	
+		ActiveMQ
+		
+		Kafka
+			> A single cluster message broker
+			> Designed originally by LinkedIn
+			
+		Axis2 | Sandesha2 | Synapse
+		Cassandra
+		Cordova
+		Hadoop | HBase | Hive | Solr | Spark
+		JMeter
+		
