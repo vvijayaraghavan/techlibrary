@@ -1,0 +1,66 @@
+
+To download the contents from a repository for the first time:
+>> clone
+
+SYNTAX
+$ git clone <url>
+
+	- A new folder called "repo" is created
+    - It is initialized as a Git repository
+    - A remote named "origin" is created, pointing to the URL you cloned from
+    - All of the repository's files and commits are downloaded there
+    - The default branch (usually called master) is checked out
+
+	- For every branch "foo" in the remote repository, a corresponding remote-tracking branch "refs/remotes/origin/foo" is created in your local repository. You can usually abbreviate such remote-tracking branch names to "origin/foo".
+
+EXAMPLE
+$ git clone https://github.com/USERNAME/REPOSITORY.git
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To update the local repository which the changes did by others (if there are any):
+>> fetch
+
+SYNTAX
+$ git fetch <remote directory name>
+
+EXAMPLE
+$ git fetch origin
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Add a new remote directory for any fetch operations
+>> remote add
+
+SYNTAX
+$ git remote add <remote_origin_name> <remote_url>
+
+EXAMPLE
+$ git remote add origin https://github.com/user/repo.git
+
+	- If the name "origin" was already used for some other url, you will get an error
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+To merge the changes from remote to your working local branch
+>> merge
+
+SYNTAX
+$ git merge <remotename>/<branchname>
+
+EXAMPLE
+$ git merge origin/MASTER
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can combine the fetch and merge actions by a single command
+>> pull
+
+SYNTAX
+$ git pull <remotename> <branchname>
+
+EXAMPLE
+$ git pull origin MASTER
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
